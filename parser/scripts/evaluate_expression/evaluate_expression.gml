@@ -16,6 +16,9 @@ var op_stack = ds_stack_create();		// The operator stack
 var output = ds_list_create();			// The output list
 var part_of_previous = false;			// Boolean to check what parts of the tokens belong together
 
+var tag = "[PARSER]"
+var error_message = "Warning, expression contains mismatched brackets!";
+
 
 for (var i = 1 ; i <= string_length(input) ; i++) {
 	var symbol = string_char_at(input, i);
@@ -25,7 +28,7 @@ for (var i = 1 ; i <= string_length(input) ; i++) {
 		var op = symbol;
 		
 		// We first check whether the top of the operator stack has a symbol with larger precedence and is left associative, and we pop such operators into the output
-		while (!ds_stack_empty(op_stack) and !array_contains(["(", ")"], ds_stack_top(op_stack))) {
+		while (!ds_stack_empty(op_stack) and ds_stack_top(op_stack) != "(") { 
 			var stack_top_data = ds_map_find_value(operators, ds_stack_top(op_stack));
 			var op_data = ds_map_find_value(operators, op);
 			if (stack_top_data[0] >= op_data[0] and stack_top_data[1] == "l") {
@@ -52,6 +55,11 @@ for (var i = 1 ; i <= string_length(input) ; i++) {
 		while (!ds_stack_empty(op_stack) and ds_stack_top(op_stack) != "(") {
 				ds_list_add(output, ds_stack_pop(op_stack));
 		}
+		// If the stack runs out before a left bracket was found, there's a mismatch somewhere
+		if (ds_stack_empty(op_stack)) {
+			show_debug_message(tag + " " + error_message);
+			return 0;	
+		}
 		ds_stack_pop(op_stack);	// Pop the left bracket that was still left over
 		part_of_previous = false;
 		
@@ -69,7 +77,13 @@ for (var i = 1 ; i <= string_length(input) ; i++) {
 
 // When all input has been read, we can pop the remaining operators onto the output and obtain an RPN expression equivalent to the original
 while !ds_stack_empty(op_stack) {
-	ds_list_add(output, ds_stack_pop(op_stack));
+	var op = ds_stack_pop(op_stack);
+	// If there's still somehow a bracket on the stack, then there's a mismatch somewhere
+	if (op == "(") {
+		show_debug_message(tag + " " + error_message);
+		return 0;
+	}
+	ds_list_add(output, op);
 }
 
 // Now we can actually evaluate the expression
