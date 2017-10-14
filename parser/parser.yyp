@@ -42,7 +42,7 @@
             "Key": "2b1b118d-7ea5-41d9-b158-3d26f8fcaeae",
             "Value": {
                 "id": "c6822910-6e15-4bf6-90cd-8ed2cb12d8b3",
-                "resourcePath": "scripts\\read\\read.yy",
+                "resourcePath": "scripts\\evaluate_expression\\evaluate_expression.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -103,19 +103,19 @@
             }
         },
         {
+            "Key": "927ab979-1f28-495e-b5db-22d330b5bf2a",
+            "Value": {
+                "id": "7185630a-5dba-42f8-a4d9-1d5a1d509d74",
+                "resourcePath": "scripts\\array_contains\\array_contains.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "a9188620-a624-4a5a-83ae-a1b53faf038b",
             "Value": {
                 "id": "6bb1a6c3-8a5b-4353-b636-6cce9154f5e7",
                 "resourcePath": "options\\linux\\options_linux.yy",
                 "resourceType": "GMLinuxOptions"
-            }
-        },
-        {
-            "Key": "acdffaab-c295-4130-83d7-99128004267a",
-            "Value": {
-                "id": "e97b1558-5541-4869-a5fa-94cfa63078a1",
-                "resourcePath": "scripts\\eval\\eval.yy",
-                "resourceType": "GMScript"
             }
         },
         {
@@ -217,7 +217,7 @@
     ],
     "script_order": [
         "2b1b118d-7ea5-41d9-b158-3d26f8fcaeae",
-        "acdffaab-c295-4130-83d7-99128004267a"
+        "927ab979-1f28-495e-b5db-22d330b5bf2a"
     ],
     "tutorial": ""
 }
