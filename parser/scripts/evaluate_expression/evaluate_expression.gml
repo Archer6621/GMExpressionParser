@@ -34,7 +34,6 @@ ds_map_add(operators, "^", [3, "r", 2]);		// Power
 
 var op_stack = ds_stack_create();		// The operator stack
 var output = ds_list_create();			// The output list
-var part_of_previous = false;			// Boolean to check what parts of the tokens belong together
 
 var tag = "[PARSER]"
 var error_message = "Warning, expression contains mismatched brackets!";
@@ -67,6 +66,7 @@ if (debug) {
 }
 
 // Start reading the pre_processed string
+var part_of_previous = false;			// Boolean to check what parts of the operand tokens belong together
 for (var i = 1 ; i <= string_length(pre_processed) ; i++) {
 	var symbol = string_char_at(pre_processed, i);
 	
