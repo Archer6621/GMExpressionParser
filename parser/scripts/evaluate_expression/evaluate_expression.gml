@@ -1,4 +1,20 @@
-// Using Dijkstra's shunting yard algorithm to create an RPN expression
+/// evaluate_expression(expression)
+///
+/// Evaluates the mathematical operation represented by the given string. It uses
+/// Dijkstra's shunting yard algorithm to create an RPN/post-fix representation of
+/// the expression, which can then be evaluated easily. Its time complexity is O(n).
+///
+/// Will warn on mismatched parentheses and return 0. Any token that is not an operator
+/// or a number will be parsed as 0 as well.
+///
+/// Example: evaluate_expression("(1+2)^3");
+/// Returns: 27
+///
+/// @param {string} expression The string containing the expression to evaluate
+/// @return {real} the result of the evaluation
+/// @author Shaad Alaka
+
+// Uses Dijkstra's shunting yard algorithm to create an RPN expression
 // Shunting yard:	https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 // RPN:				https://en.wikipedia.org/wiki/Reverse_Polish_notation
 
@@ -19,7 +35,7 @@ var part_of_previous = false;			// Boolean to check what parts of the tokens bel
 var tag = "[PARSER]"
 var error_message = "Warning, expression contains mismatched brackets!";
 
-
+// Start reading the input
 for (var i = 1 ; i <= string_length(input) ; i++) {
 	var symbol = string_char_at(input, i);
 	
@@ -88,18 +104,21 @@ while !ds_stack_empty(op_stack) {
 
 // Now we can actually evaluate the expression
 
-// init
+// Init
 var operand_stack = ds_stack_create();
 
+// Start iterating over the list with tokens
 for (var j = 0 ; j < ds_list_size(output) ; j++) {
 	var token = ds_list_find_value(output, j);
 	
 	// If we're dealing with an operator, we pop the two top operands on the operand_stack, and perform the specified operation
 	if ds_map_exists(operators, token) {
 		var operator = token;
-		// The order on the stack is inverted, hence the inverted assignment
+		
+		// The operand order on the stack is inverted, hence the inverted assignment
 		var op2 = real(ds_stack_pop(operand_stack));
 		var op1 = real(ds_stack_pop(operand_stack));
+		
 		switch (operator) {
 			case "+":	ds_stack_push(operand_stack, op1 + op2);
 						break;
@@ -118,5 +137,5 @@ for (var j = 0 ; j < ds_list_size(output) ; j++) {
 	}
 }
 
-
+// The last thing on the stack will be the result of the calculation
 return ds_stack_pop(operand_stack);
