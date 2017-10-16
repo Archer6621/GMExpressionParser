@@ -1,2 +1,2 @@
 # GMExpressionParser
-A simple parser that can parse and compute expressions from strings
+A simple parser that can parse and compute mathematical expressions from strings
