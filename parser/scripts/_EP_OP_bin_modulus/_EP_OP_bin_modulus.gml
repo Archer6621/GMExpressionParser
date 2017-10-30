@@ -1,6 +1,7 @@
-// Operator description:
-//
-//
+// Operator description
+// Obtains the remainder of the integer division of the real value of the first token by the real value of the second token.
+//	E: 3 % 2
+//	R: 1
 
 // The operator's definition is returned when still initializing
 if (self.object_index==_EP_obj_storage) {

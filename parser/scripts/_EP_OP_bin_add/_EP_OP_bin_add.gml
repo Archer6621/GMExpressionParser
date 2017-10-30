@@ -1,6 +1,7 @@
-// Operator description:
-//
-//
+// Operator description
+// Performs addition between two tokens that are converted to real numbers.
+//	E: 1 + 2
+//	R: 3
 
 // The operator's definition is returned when still initializing
 if (self.object_index==_EP_obj_storage) {

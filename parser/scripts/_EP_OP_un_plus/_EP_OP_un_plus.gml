@@ -1,6 +1,7 @@
-// Operator description:
-//
-//
+// Operator description
+// Returns the real value of the given token (basically does nothing, just there to deal with superfluous plusses from user input).
+//	E: + 5
+//	R: 5
 
 // The operator's definition is returned when still initializing
 if (self.object_index==_EP_obj_storage) {

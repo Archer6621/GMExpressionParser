@@ -1,3 +1,5 @@
+// Outputs a string representation of the contents of a given ds_stack
+
 var stack = argument0;
 var temp = ds_stack_create();
 ds_stack_copy(temp, stack);

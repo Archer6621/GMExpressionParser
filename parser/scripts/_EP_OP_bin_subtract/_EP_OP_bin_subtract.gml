@@ -1,6 +1,7 @@
-// Operator description:
-//
-//
+// Operator description
+// Subtracts the real value of the second token from the real value of the first token.
+//	E: 3 - 2
+//	R: 1
 
 // The operator's definition is returned when still initializing
 if (self.object_index==_EP_obj_storage) {

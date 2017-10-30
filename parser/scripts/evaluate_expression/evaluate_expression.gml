@@ -10,6 +10,9 @@
 /// Will warn on mismatched parentheses and return 0. Any token that is not an operator
 /// or a number will be parsed as 0 as well at the end. Supports multi-character operators.
 ///
+/// Operators can easily be added by creating a new script in the Operators folder that follows
+/// the same format as the other operators and is prefixed by: _EP_OP_
+///
 /// Example: evaluate_expression("(1+2)^3");
 /// Returns: 27
 ///
@@ -24,29 +27,26 @@
 // Config
 var debug = false;
 
-
 // Variable initialization
 var input = argument0;
 var op_stack = ds_stack_create();		// The operator stack
 var output = ds_list_create();			// The output list
 
-
 var tag = "[PARSER]"
 var error_message = "Warning, expression contains mismatched brackets!";
 
-// Find storage instance. If not present, create it.
+// Find storage instance. If not present, create it. It should continue to exist, since it is persistent.
 var storage = instance_find(_EP_obj_storage, 0);
 if (!instance_exists(storage)) {
 	storage = instance_create_depth(0, 0, 0, _EP_obj_storage);
 }
 
 if (debug) {
-	show_debug_message("OPERATOR ARRAY:")
+	show_debug_message("Operator array:")
 	show_debug_message(storage.operator_array);
 }
 
-
-// Tokenize
+#region // Tokenize
 var buffer = "";
 var tokens = ds_list_create();
 for (var i = 1 ; i <= string_length(input) ; i++) {
@@ -101,13 +101,14 @@ for (var i = 1 ; i <= string_length(input) ; i++) {
 // Final flush
 ds_list_add(tokens, buffer);
 buffer = "";
-
+#endregion
 
 if (debug) {
 	show_debug_message(tag + " " + "Tokenized string:");
 	show_debug_message(tag + " " + _EP_ds_list_to_string(tokens));
 }
 
+#region // Shunting yard algorithm
 // Start reading the pre_processed string
 for (var i = 0 ; i < ds_list_size(tokens) ; i++) {
 	var token = ds_list_find_value(tokens, i);
@@ -164,14 +165,14 @@ while !ds_stack_empty(op_stack) {
 	}
 	ds_list_add(output, op);
 }
+#endregion
 
 if (debug) {
 	show_debug_message(tag + " " + "After applying shunting yard algorithm:");
 	show_debug_message(tag + " " + _EP_ds_list_to_string(output));
 }
 
-// Now we can actually evaluate the expression
-
+#region // Evaluation
 // Init
 var operand_stack = ds_stack_create();
 
@@ -219,9 +220,7 @@ for (var j = 0 ; j < ds_list_size(output) ; j++) {
 		ds_stack_push(operand_stack, operand);	
 	}
 }
-
-
-
+#endregion
 
 // The last thing on the stack will be the result of the calculation
 var result = ds_stack_pop(operand_stack);

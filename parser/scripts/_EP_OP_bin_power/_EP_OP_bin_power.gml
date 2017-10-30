@@ -1,6 +1,9 @@
-// Operator description:
-//
-//
+// Operator description
+// Ouputs the real value of the first token to the power of the real value of the second token
+// Beware: will return NaN when the real value of the first token is negative, which is a limitation of GM's power function
+//	E: 3 ^ 2
+//	R: 9
+
 
 // The operator's definition is returned when still initializing
 if (self.object_index==_EP_obj_storage) {
